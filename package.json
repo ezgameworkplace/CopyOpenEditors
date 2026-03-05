@@ -4,6 +4,11 @@
   "description": "Copy all currently open editors file list to clipboard.",
   "version": "0.0.1",
   "publisher": "ezgamer",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ezgameworkplace/CopyOpenEditors"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -36,6 +41,19 @@
           "type": "string",
           "default": "",
           "description": "String appended to each output line."
+        },
+        "copyOpenEditors.pathMode": {
+          "type": "string",
+          "enum": [
+            "relative",
+            "absolute"
+          ],
+          "default": "relative",
+          "markdownEnumDescriptions": [
+            "Output workspace-relative path when possible.",
+            "Output absolute local file path."
+          ],
+          "description": "Choose whether copied paths are relative or absolute."
         }
       }
     }

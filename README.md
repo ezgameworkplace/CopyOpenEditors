@@ -17,13 +17,15 @@ Output is one file path per line.
 
 ## Configurable Parameters
 
-You can configure settings in VS Code Settings by searching `Copy Open Editors`, or in `settings.json`.
+Press `Ctrl+,` to open VS Code Settings, then search `Copy Open Editors`.  
+You can also configure in `settings.json`.
 
 ```json
 {
   "copyOpenEditors.filterRegex": "\\.(cs|ts|vue)$",
   "copyOpenEditors.linePrefix": "@",
-  "copyOpenEditors.lineSuffix": ""
+  "copyOpenEditors.lineSuffix": "",
+  "copyOpenEditors.pathMode": "relative"
 }
 ```
 
@@ -44,6 +46,12 @@ You can configure settings in VS Code Settings by searching `Copy Open Editors`,
   - Default: `""`
   - Adds text after each output line.
   - Example: ` #open`
+
+- `copyOpenEditors.pathMode`
+  - Type: `string`
+  - Default: `"relative"`
+  - Controls output format: `relative` or `absolute`.
+  - Example: `"absolute"`
 
 ## Notes
 

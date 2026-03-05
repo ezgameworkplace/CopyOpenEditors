@@ -2,11 +2,15 @@ import * as vscode from "vscode";
 
 const DEFAULT_FILTER_REGEX = "\\.(cs|ts|vue)$";
 const DEFAULT_LINE_PREFIX = "@";
+const DEFAULT_PATH_MODE: PathMode = "relative";
+
+type PathMode = "relative" | "absolute";
 
 type ExtensionConfig = {
   filterRegex: string;
   linePrefix: string;
   lineSuffix: string;
+  pathMode: PathMode;
 };
 
 export function activate(context: vscode.ExtensionContext): void {
@@ -21,7 +25,7 @@ export function activate(context: vscode.ExtensionContext): void {
       }
 
       const config = readExtensionConfig();
-      const paths = uris.map((uri) => vscode.workspace.asRelativePath(uri, false));
+      const paths = buildPaths(uris, config.pathMode);
       const filteredPaths = applyRegexFilter(paths, config.filterRegex);
 
       if (filteredPaths.length === 0) {
@@ -66,11 +70,24 @@ function collectOpenEditorUris(): vscode.Uri[] {
 
 function readExtensionConfig(): ExtensionConfig {
   const config = vscode.workspace.getConfiguration("copyOpenEditors");
+  const rawPathMode = config.get<string>("pathMode", DEFAULT_PATH_MODE);
   return {
     filterRegex: config.get<string>("filterRegex", DEFAULT_FILTER_REGEX).trim(),
     linePrefix: config.get<string>("linePrefix", DEFAULT_LINE_PREFIX),
-    lineSuffix: config.get<string>("lineSuffix", "")
+    lineSuffix: config.get<string>("lineSuffix", ""),
+    pathMode: parsePathMode(rawPathMode)
   };
+}
+
+function parsePathMode(pathMode: string): PathMode {
+  return pathMode === "absolute" ? "absolute" : "relative";
+}
+
+function buildPaths(uris: vscode.Uri[], pathMode: PathMode): string[] {
+  if (pathMode === "absolute") {
+    return uris.map((uri) => uri.fsPath);
+  }
+  return uris.map((uri) => vscode.workspace.asRelativePath(uri, false));
 }
 
 function applyRegexFilter(paths: string[], filterRegex: string): string[] {
