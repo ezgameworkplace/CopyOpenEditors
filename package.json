@@ -1,0 +1,53 @@
+{
+  "name": "copy-open-editors",
+  "displayName": "Copy Open Editors",
+  "description": "Copy all currently open editors file list to clipboard.",
+  "version": "0.0.1",
+  "publisher": "ezgamer",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "icon": "images/icon.png",
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "copyOpenEditors.copyList",
+        "title": "Copy Open Editors: Copy File List"
+    }
+    ],
+    "configuration": {
+      "title": "Copy Open Editors",
+      "properties": {
+        "copyOpenEditors.filterRegex": {
+          "type": "string",
+          "default": "\\.(cs|ts|vue)$",
+          "description": "Regex filter for file paths. Default matches .cs, .ts and .vue files."
+        },
+        "copyOpenEditors.linePrefix": {
+          "type": "string",
+          "default": "@",
+          "description": "String prepended to each output line."
+        },
+        "copyOpenEditors.lineSuffix": {
+          "type": "string",
+          "default": "",
+          "description": "String appended to each output line."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "prepublish": "npm run compile"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.12",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.5.4"
+  }
+}
