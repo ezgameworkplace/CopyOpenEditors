@@ -1,6 +1,6 @@
 {
-  "name": "copy-open-editors",
-  "displayName": "Copy Open Editors",
+  "name": "open-editors-to-clipboard",
+  "displayName": "Open Editors To Clipboard",
   "description": "Copy all currently open editors file list to clipboard.",
   "version": "0.0.1",
   "publisher": "ezgamer",
